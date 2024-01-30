@@ -1,0 +1,44 @@
+# Enable History:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
+
+#Add .NET Core SDK tools
+export PATH="$PATH:/home/insidious_flames/.dotnet/tools/"
+
+# Use lf to switch directories and bind it to ctrl-o:
+lfcd () {
+  tmp="$(mktemp)"
+  lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+  fi
+}
+bindkey -s '^o' 'lfcd\n'
+
+# Reverse Search
+bindkey "^R" history-incremental-pattern-search-backward
+
+# Aliases:
+alias neofetch="neofetch --backend kitty --source ~/Pictures/shell.png --image_size 500"
+alias ssh="kitten ssh"
+
+# Enable Powerlevel10k:
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Enable Syntax Highlighting (Needs to be last):
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+neofetch
