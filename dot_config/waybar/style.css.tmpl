@@ -1,0 +1,241 @@
+/* Keyframes */
+
+@keyframes blink-critical {
+	to {
+		color: @critical;
+	}
+}
+
+/* Styles */
+
+/* Colors (gruvbox) */
+@define-color black	    #282828;
+@define-color red	    #cc241d;
+@define-color green 	#98971a;
+@define-color yellow	#d79921;
+@define-color blue	    #458588;
+@define-color purple	#b16286;
+@define-color aqua	    #689d6a;
+@define-color orange    #d65d0e;
+@define-color gray	    #a89984;
+@define-color brgray	#928374;
+@define-color brred	    #fb4934;
+@define-color brgreen	#b8bb26;
+@define-color bryellow	#fabd2f;
+@define-color brblue	#83a598;
+@define-color brpurple	#d3869b;
+@define-color braqua	#8ec07c;
+@define-color brorange  #fe8019;
+@define-color white	    #ebdbb2;
+@define-color bg2	    #504945;
+
+@define-color warning 	@orange;
+@define-color critical	@red;
+@define-color submap	@black;
+@define-color unfocused @bg2;
+@define-color focused	@brred;
+@define-color inactive	@bryellow;
+@define-color sound	    @brred;
+@define-color network	@brgreen;
+@define-color memory	@bryellow;
+@define-color cpu	    @brblue;
+@define-color temp	    @brpurple;
+@define-color battery	@braqua;
+@define-color date	    @white;
+@define-color time	    @black;
+
+/* Reset all styles */
+* {
+	border: none;
+	border-radius: 0;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+/* The whole bar */
+#waybar {
+	background: rgb(40, 40, 40);
+	color: @white;
+	font-family: Hack Nerd Font;
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+/* Each module */
+#battery,
+#clock,
+#cpu,
+#disk,
+#idle_inhibitor,
+#memory,
+#submap,
+#network,
+#temperature,
+#tray,
+#wireplumber{
+	padding-left: 8pt;
+	padding-right: 8pt;
+}
+
+/* Each critical module */
+#submap,
+#memory.critical,
+#cpu.critical,
+#temperature.critical,
+#disk.critical {
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-name: blink-critical;
+	animation-duration: 1s;
+}
+
+/* Each warning */
+#network.disconnected,
+#memory.warning,
+#cpu.warning,
+#temperature.warning,
+#disk.warning {
+	color: @warning;
+}
+
+/* And now modules themselves in their respective order */
+
+/* Current Hyprland submap (resize etc) */
+#submap {
+	color: @white;
+	background: @submap;
+}
+
+/* Workspaces stuff */
+#workspaces button {
+	/*font-weight: bold;*/
+	padding-left: 1rem;
+	padding-right: 1rem;
+	color: @white;
+	background: @unfocused;
+}
+
+/* Inactive (on unfocused output) */
+#workspaces button.visible {
+	color: @black;
+	background: @inactive;
+}
+
+/* Active (on focused output) */
+#workspaces button.active {
+  color: @black;
+	background: @focused;
+}
+
+/* Contains an urgent window */
+#workspaces button.urgent {
+	color: @black;
+	background: @warning;
+}
+
+/* Style when cursor is on the button */
+#workspaces button:hover {
+	background: @black;
+	color: @white;
+}
+
+#window {
+	margin-right: 35pt;
+	margin-left: 35pt;
+}
+
+#wireplumber {
+	background: @sound;
+	color: @black;
+}
+
+#network {
+	background: @network;
+	color: @black;
+}
+
+#memory {
+	background: @memory;
+	color: @black;
+}
+
+#cpu {
+	background: @cpu;
+	color: @black;
+}
+
+#temperature {
+	background: @temp;
+	color: @black;
+}
+
+#disk {
+	background: @battery;
+	color: @black;
+}
+
+#tray {
+	background: @black;
+}
+
+#clock.date {
+	background: @date;
+	color: @black;
+}
+
+#clock.time {
+	background: @time;
+	color: @white;
+}
+
+#custom-arrow1 {
+	font-size: 11pt;
+	color: @sound;
+	background: transparent;
+}
+
+#custom-arrow2 {
+	font-size: 11pt;
+	color: @network;
+	background: @sound;
+}
+
+#custom-arrow3 {
+	font-size: 11pt;
+	color: @memory;
+	background: @network;
+}
+
+#custom-arrow4 {
+	font-size: 11pt;
+	color: @cpu;
+	background: @memory;
+}
+
+#custom-arrow5 {
+	font-size: 11pt;
+	color: @temp;
+	background: @cpu;
+}
+
+#custom-arrow6 {
+	font-size: 11pt;
+	color: @battery;
+	background: @temp;
+}
+
+#custom-arrow7 {
+	font-size: 11pt;
+	color: @date;
+	background: @battery;
+}
+
+#custom-arrow8 {
+	font-size: 11pt;
+	color: @time;
+	background: @date;
+}
