@@ -1,0 +1,61 @@
+/**
+ * Power Menu Theme (Based on Power Menu Type 5 Style 1 By Aditya Shakya (adi1090x)
+ *
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
+/*****----- Configuration -----*****/
+@import "~/.config/rofi/themes/gruvbox.rasi"
+
+/*****----- Main Box -----*****/
+mainbox {
+    spacing:                     0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-color:                @selected;
+    children:                    [ "inputbar", "listview", "message" ];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    spacing:                     0px;
+    padding:                     100px 80px;
+    background-image:            url("~/.config/rofi/images/powermenu.png", width);
+    children:                    [ "textbox-prompt-colon", "dummy","prompt"];
+}
+
+textbox-prompt-colon {
+    str:                         " System";
+    padding:                     12px;
+}
+
+prompt {
+    padding:                     12px;
+}
+
+/*****----- Message -----*****/
+message {
+    padding:                     15px;
+}
+
+/*****----- Listview -----*****/
+listview {
+    dynamic:                     true;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    spacing:                     15px;
+    margin:                      15px;
+}
+
+/*****----- Elements -----*****/
+element {
+    background-color:            @background-alt;
+}
+
+element-text {
+    font:                        "feather bold 32";
+    horizontal-align:            0.5;
+}
+

@@ -1,0 +1,141 @@
+/**
+ * Clipboard Theme (Based on Launcher Type 7 Style 4 By Aditya Shakya (adi1090x)
+ *
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
+/*****----- Configuration -----*****/
+@import "~/.config/rofi/themes/gruvbox.rasi"
+
+/*****----- Main Window -----*****/
+window {
+    location:                    west;
+    anchor:                      north;
+    width:                       30%;
+    height:                      100%;
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listbox" ];
+}
+
+listbox {
+    spacing:                     15px;
+    padding:                     10px 0 0 0;
+    background-color:            transparent;
+    orientation:                 horizontal;
+    children:                    [ "message", "listview" ];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    spacing:                     10px;
+    padding:                     80px;
+    background-image:            url("~/.config/rofi/images/clipboard.png", width);
+    background-color:            @background;
+    text-color:                  @foreground;
+    orientation:                 horizontal;
+    children:                    [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    str:                         " ";
+    padding:                     13px 15px;
+    background-color:            @background-alt;
+    text-color:                  inherit;
+}
+
+entry {
+    enabled:                     true;
+    expand:                      true;
+    padding:                     12px 10px;
+    background-color:            @background-alt;
+    text-color:                  inherit;
+    cursor:                      text;
+    placeholder:                 "Search Clipboard";
+    placeholder-color:           inherit;
+}
+
+/*****----- Listview -----*****/
+listview {
+    columns:                     1;
+    lines:                       0;
+    dynamic:                     true;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               false;
+    padding-bottom:              0px;
+    spacing:                     5px;
+    text-color:                  @foreground;
+}
+
+/*****----- Elements -----*****/
+element {
+    spacing:                     10px;
+    padding:                     8px;
+    background-color:            transparent;
+}
+
+element normal.normal {
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+element normal.urgent {
+    background-color:            @urgent;
+    text-color:                  @foreground;
+}
+
+element normal.active {
+    background-color:            @active;
+    text-color:                  @background;
+}
+
+element selected.normal {
+    background-color:            @selected;
+    text-color:                  @background;
+}
+
+element selected.urgent {
+    background-color:            @urgent;
+    text-color:                  @foreground;
+}
+
+element selected.active {
+    background-color:            @urgent;
+    text-color:                  @foreground;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        24px;
+    cursor:                      inherit;
+}
+
+element-text {
+    font:                        inherit;
+    horizontal-align:            0.0;
+}
+
+/*****----- Message -----*****/
+message {
+    background-color:            transparent;
+}
+
+textbox {
+    padding:                     12px;
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+    horizontal-align:            0.0;
+}
+
+error-message {
+    padding:                     12px;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @foreground;
+}

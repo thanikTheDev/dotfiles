@@ -1,0 +1,14 @@
+/*****----- Configuration -----*****/
+@theme "launcher.rasi"
+configuration {
+    modi:                 "drun,window,filebrowser,run";
+    show-icons:           true;
+    display-drun:         " ";
+    display-run:          " ";
+    display-filebrowser:  " ";
+    display-window:       " ";
+    drun-display-format:  "{name}";
+    window-format:        "{w}{c}";
+    display-emoji:        "🔎 ";
+}
+

@@ -1,0 +1,71 @@
+/**
+ * Screenshot Theme (Based on Power Menu Type 5 Style 1 By Aditya Shakya (adi1090x)
+ *
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
+/*****----- Configuration -----*****/
+@import "~/.config/rofi/themes/gruvbox.rasi"
+
+/*****----- Main Box -----*****/
+mainbox {
+    spacing:                     20px;
+    padding:                     20px;
+    children:                    [ "inputbar", "message", "listview" ];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    spacing:                     25px;
+    padding:                     195px 50px;
+    border-color:                @selected;
+    text-color:                  @foreground;
+    children:                    ["dummy", "textbox-prompt-colon", "prompt", "dummy"];
+}
+
+textbox-prompt-colon {
+    str:                         "";
+    padding:                     10px 20px;
+}
+
+prompt {
+    padding:                     10px;
+}
+
+/*****----- Message -----*****/
+message {
+    padding:                     10px;
+}
+
+/*****----- Listview -----*****/
+listview {
+    spacing:                     20px;
+}
+
+/*****----- Elements -----*****/
+element normal.normal,
+element alternate.normal {
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+}
+
+element normal.urgent,
+element alternate.urgent,
+element selected.active {
+    background-color:            @urgent;
+    text-color:                  @background;
+}
+
+element normal.active,
+element alternate.active,
+element selected.urgent {
+    background-color:            @active;
+    text-color:                  @background;
+}
+
+element-text {
+    font:                        "feather bold 32";
+    horizontal-align:            0.5;
+}
+
