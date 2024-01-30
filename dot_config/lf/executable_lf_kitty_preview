@@ -26,7 +26,7 @@ if [[ "$filetype" =~ ^video ]]; then
     exit 1
 fi
 
-if [[ "$filetype" =~ ^application/octet-stream ]]; then
+if [[ "$filetype" =~ ^application/octet-stream || $file == *.stl ]]; then
     CACHE=$(mktemp /tmp/thumbcache.XXXXX)
     stl-thumb "$file" "$CACHE" -m 550000 aa0000 ff0000
     kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$CACHE" < /dev/null > /dev/tty

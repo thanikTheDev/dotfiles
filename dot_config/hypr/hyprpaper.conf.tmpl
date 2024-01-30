@@ -3,3 +3,6 @@ preload = ~/Pictures/wallpaper.png
 wallpaper = , ~/Pictures/wallpaper.png
 
 splash = false
+{{- if eq .chezmoi.hostname "neutron" }}
+ipc = off
+{{- end }}

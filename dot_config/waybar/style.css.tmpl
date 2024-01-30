@@ -85,6 +85,7 @@
 #memory.critical,
 #cpu.critical,
 #temperature.critical,
+#battery.critical.discharging,
 #disk.critical {
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
@@ -98,6 +99,7 @@
 #memory.warning,
 #cpu.warning,
 #temperature.warning,
+#battery.warning.discharging,
 #disk.warning {
 	color: @warning;
 }
@@ -170,6 +172,11 @@
 
 #temperature {
 	background: @temp;
+	color: @black;
+}
+
+#battery {
+	background: @battery;
 	color: @black;
 }
 

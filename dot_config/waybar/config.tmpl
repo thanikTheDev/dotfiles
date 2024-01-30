@@ -29,16 +29,39 @@
 		"custom/arrow6",
 {{- if eq .chezmoi.hostname "void" }}        
 		"disk",
+{{- else if eq .chezmoi.hostname "neutron" }}
+    "battery",
 {{- end }}
 		"custom/arrow7",
 		"clock#date",
 		"custom/arrow8",
 		"clock#time",
-        "idle_inhibitor"
+    "idle_inhibitor"
 	],
 
 	// Modules
 	
+  "battery": {
+		"interval": 10,
+		"states": {
+			"warning": 30,
+			"critical": 15
+		},
+		"format-time": "{H}:{M:02}",
+		"format": "{icon} {capacity}% ({time})",
+		"format-charging": " {capacity}% ({time})",
+		"format-full": " {capacity}%",
+		"format-alt": "{icon} {power}W",
+		"format-icons": [
+			" ",
+			" ",
+			" ",
+			" ",
+			" "
+		],
+		"tooltip": false
+	},
+
 	"clock#time": {
 		"interval": 10,
 		"format": "{:%I:%M %p}",
