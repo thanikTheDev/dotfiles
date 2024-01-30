@@ -1,0 +1,152 @@
+# Basic Settings
+set hidden true
+set ignorecase true
+set icons true
+set drawbox true
+set autoquit true
+
+set previewer ~/.config/lf/lf_kitty_preview
+set cleaner ~/.config/lf/lf_kitty_clean
+set ifs "\n"
+
+# Warning about nested instances
+%[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
+
+# Custom Commands
+cmd open &{{
+  case $(file --mime-type -Lb $f) in
+    text/*|application/json|application/x-ndjson) lf -remote "send $id \$$EDITOR \$f";;
+    *) $OPENER $f > /dev/null 2> /dev/null
+  esac
+}}
+
+cmd mkdir %{{
+  printf "Directory Name: "
+  read newDir
+  mkdir "$newDir"
+  lf -remote "send reload" 
+}}
+
+cmd mkfile %{{
+  printf "File Name: "
+  read newFile
+  lf -remote "send $id \$$EDITOR $newFile"
+  lf -remote "send reload" 
+}}
+
+cmd chmod %{{
+  printf "Mode Bits: "
+  read ans
+  chmod $ans $fx
+  lf -remote "send reload" 
+}}
+
+cmd fzf_jump ${{
+  res="$(fzf --reverse --header='Jump to location')"
+  if [ -f "$res" ]; then
+    cmd="select"
+  elif [ -d "$res" ]; then
+    cmd="cd"
+  fi
+  lf -remote "send $id $cmd \"$res\""
+}}
+
+cmd dragon-drop %dragon-drop -a -x $fx
+
+cmd dragon-stay %dragon-drop -a $fx
+
+cmd delete %trash-put $fx
+
+cmd delete_perm %rm -rf $fx
+
+cmd unarchive %{{
+  target="${f%%.*}"
+  case $f in
+    *.zip) unzip $f -d $target;;
+    *.tar.gz|*.tgz) tar xzvf $f --one-top-level;;
+    *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f --one-top-level;;
+    *.tar) tar xvf $f --one-top-level;;
+    *.tar.xz|*.txz) tar xJvf $f --one-top-level;;
+    *.rar) unrar x $f "${target}/";;
+    *.7z) 7z x $f;;
+    *) echo "Unsupported format";;
+  esac
+}}
+
+cmd zip %{{
+  files=()
+  for file in $fx
+  do
+    files+=(${file#"${PWD}/"})
+  done
+  zip "${f%%.*}.zip" ${files[@]}  
+}}
+
+cmd tar %{{
+  files=()
+  for file in $fx
+  do
+    files+=(${file#"${PWD}/"})
+  done
+  tar cvf "${f%%.*}.tar" ${files[@]}
+}}
+
+cmd targz %{{
+  files=()
+  for file in $fx
+  do
+    files+=(${file#"${PWD}/"})
+  done
+  tar cvzf "${f%%.*}.tar.gz" ${files[@]}
+}}
+
+cmd tarbz2 %{{
+  files=()
+  for file in $fx
+  do
+    files+=(${file#"${PWD}/"})
+  done
+  tar cjvf "${f%%.*}.tar.bz2" ${files[@]}
+}}
+
+# Reset Defaults
+map d
+map w
+map m
+map "'"
+map '"'
+map e
+map f
+map c
+
+# Archive Mapping
+map az zip
+map at tar
+map ag targz
+map ab tarbz2
+map au unarchive
+
+# Dragon Mapping
+map dr dragon-drop
+map ds dragon-stay
+
+# Basic Mapping
+map <delete> delete
+map <s-delete> delete_perm
+map <enter> open
+map <esc> quit
+map . set hidden!
+map x cut
+map mf mkfile
+map md mkdir
+map cm chmod
+map f fzf_jump
+map cc clear
+map <f-5> reload
+
+# Goto Mapping
+map gu cd /run/media/insidious_flames
+map gt cd ~/.local/share/Trash/files
+map gd cd ~/Documents
+map gD cd ~/Downloads
+map gn cd /mnt/mobiusNAS/

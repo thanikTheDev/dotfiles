@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+file=$1
+w=$2
+h=$3
+x=$4
+y=$5
+
+filetype="$( file -Lb --mime-type "$file")"
+
+if [[ "$filetype" =~ ^image ]]; then
+    kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file" < /dev/null > /dev/tty
+    exit 1
+fi
+
+if [[ "$filetype" =~ ^application/pdf ]]; then
+    CACHE=$(mktemp /tmp/thumbcache.XXXXX)
+    pdftoppm -png -f 1 -singlefile "$file" "$CACHE"
+    kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$CACHE.png" < /dev/null > /dev/tty
+    exit 1
+fi
+
+if [[ "$filetype" =~ ^video ]]; then
+    CACHE=$(mktemp /tmp/thumbcache.XXXXX)
+    ffmpegthumbnailer -i "$file" -o "$CACHE" -s 900
+    kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$CACHE" < /dev/null > /dev/tty
+    exit 1
+fi
+
+if [[ "$filetype" =~ ^application/octet-stream ]]; then
+    CACHE=$(mktemp /tmp/thumbcache.XXXXX)
+    stl-thumb "$file" "$CACHE" -m 550000 aa0000 ff0000
+    kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$CACHE" < /dev/null > /dev/tty
+    exit 1
+fi
+
+pistol "$file"
