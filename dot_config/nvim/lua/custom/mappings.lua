@@ -3,7 +3,8 @@ local M = {}
 
 M.general = {
     n = {
-        [";"] = { ":", "enter command mode", opts = { nowait = true } },
+        ["<C-d>"] = {"<C-d>zz", "Jump Down"},
+        ["<C-u>"] = {"<C-u>zz", "Jump Up"},
         ["<leader>ll"] = { "<cmd> VimtexCompile <CR>", "Vimtex Compile" },
     },
 }
@@ -16,7 +17,7 @@ M.dap = {
             function()
                 require("dap").continue()
             end,
-            "Debug Continue"
+            "Continue"
         },
         ["<leader>db"] = {
             function()
@@ -24,11 +25,23 @@ M.dap = {
             end,
             "Toggle Breakpoint"
         },
+        ["<leader>dB"] = {
+            function()
+                require("dap").set_breakpoint(vim.fn.input('Breakpoint Condition: '))
+            end,
+            "Breakpoint Condition"
+        },
         ["<leader>do"] = {
             function()
                 require("dap").step_over()
             end,
             "Step Over"
+        },
+        ["<leader>dO"] = {
+            function()
+                require("dap").step_out()
+            end,
+            "Step Out"
         },
         ["<leader>di"] = {
             function()
@@ -36,6 +49,26 @@ M.dap = {
             end,
             "Step Into"
         },
+        ["<leader>du"] = {
+            function()
+                require("dap")
+                require("dapui").toggle()
+            end,
+            "Toggle UI"
+        },
+        ["<leader>de"] = {
+            function()
+                require("dap")
+                require("dapui").eval()
+            end,
+            "Evaluate"
+        },
+        ["<leader>dt"] = {
+            function()
+                require("dap").terminate()
+            end,
+            "Terminate"
+        }
     }
 }
 

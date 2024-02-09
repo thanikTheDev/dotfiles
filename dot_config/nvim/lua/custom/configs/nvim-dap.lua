@@ -1,10 +1,21 @@
 local dap = require "dap"
 local dapui = require "dapui"
 
-vim.api.nvim_set_hl(0, "red", { fg = "#FB4934" })
+local icons = {
+    Stopped             = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
+    Breakpoint          = " ",
+    BreakpointCondition = " ",
+    BreakpointRejected  = { " ", "DiagnosticError" },
+    LogPoint            = ".>",
+}
 
-vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'red', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-vim.fn.sign_define('DapBreakpointCondition', { text = '', texthl = 'red', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+for name, sign in pairs(icons) do
+    sign = type(sign) == "table" and sign or { sign }
+    vim.fn.sign_define(
+        "Dap" .. name,
+        { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
+    )
+end
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()
@@ -20,15 +31,16 @@ end
 
 dap.adapters.coreclr = {
     type = "executable",
-    command = "netcoredbg",
+    -- command = vim.fs.normalize(vim.fn.stdpath("data") .. "/mason/bin/netcoredbg"),
+    command = "/usr/local/netcoredbg",
     args = {"--interpreter=vscode"}
 }
 
--- dap.adapters.godot = {
---     type = "executable",
---     command = "mono",
---     args = { "/home/insidious_flames/godot-csharp-vscode/dist/GodotDebugSession/GodotDebugSession.exe" }
--- }
+dap.adapters.godot = {
+    type = "executable",
+    command = "mono",
+    args = { "/home/insidious_flames/godot-csharp-vscode/dist/GodotDebugSession/GodotDebugSession.exe" }
+}
 
 -- dap.adapters.unity = {
 --     type = "executable",
@@ -42,14 +54,13 @@ dap.configurations.cs = {
         name = "DOTNET Core",
         request = "launch",
         program = function()
-            return vim.fn.input("Path to dll", vim.fn.getcwd() .. "/bin/Debug/", "file")
+            return vim.fn.input("Path to dll:", vim.fn.getcwd() .. "/bin/Debug/", "file")
         end,
     },
-    -- {
-    --     type = "godot",
-    --     name = "Godot",
-    --     request = "launch",
-    --     project = "${workspaceFolder}",
-    --     launch_scene = true,
-    -- }
+    {
+        type = "coreclr",
+        name = "Godot (Mono): Launch",
+        request = "launch",
+        program = "godot",
+    }
 }
