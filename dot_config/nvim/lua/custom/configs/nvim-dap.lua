@@ -1,5 +1,13 @@
 local dap = require "dap"
 local dapui = require "dapui"
+local dap_utils = require "dap.utils"
+
+-- Telescope Dependencies
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
+local conf = require("telescope.config").values
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
 
 local icons = {
     Stopped             = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
@@ -36,10 +44,10 @@ dap.adapters.coreclr = {
     args = {"--interpreter=vscode"}
 }
 
-dap.adapters.godot = {
+dap.adapters.godotCLR = {
     type = "executable",
-    command = "mono",
-    args = { "/home/insidious_flames/godot-csharp-vscode/dist/GodotDebugSession/GodotDebugSession.exe" }
+    command = "/usr/local/netcoredbg",
+    args = { "--interpreter=vscode", "--", "godot"}
 }
 
 -- dap.adapters.unity = {
@@ -51,16 +59,52 @@ dap.adapters.godot = {
 dap.configurations.cs = {
     {
         type = "coreclr",
-        name = "DOTNET Core",
+        name = "DOTNET: Launch",
         request = "launch",
         program = function()
-            return vim.fn.input("Path to dll:", vim.fn.getcwd() .. "/bin/Debug/", "file")
+            return coroutine.create(function (coro)
+                local opts = {}
+                pickers.new(opts, {
+                    prompt_title = "Select DLL",
+                    finder = finders.new_oneshot_job({"fd", "--no-ignore", "-e", "dll"}, {}),
+                    sorter = conf.generic_sorter(opts),
+                    attach_mappings = function (buffer_number)
+                        actions.select_default:replace(function ()
+                            actions.close(buffer_number)
+                            coroutine.resume(coro, action_state.get_selected_entry()[1])
+                        end)
+                        return true
+                    end
+                }):find()
+            end)
+        end,
+    },
+    {
+        type = "godotCLR",
+        name = "Godot: Launch Scene",
+        request = "launch",
+        program = function ()
+            return coroutine.create(function (coro)
+                local opts = {}
+                pickers.new(opts, {
+                    prompt_title = "Select Scene",
+                    finder = finders.new_oneshot_job({"fd", "--no-ignore", "-e", "tscn"}, {}),
+                    sorter = conf.generic_sorter(opts),
+                    attach_mappings = function (buffer_number)
+                        actions.select_default:replace(function ()
+                            actions.close(buffer_number)
+                            coroutine.resume(coro, action_state.get_selected_entry()[1])
+                        end)
+                        return true
+                    end
+                }):find()
+            end)
         end,
     },
     {
         type = "coreclr",
-        name = "Godot (Mono): Launch",
-        request = "launch",
-        program = "godot",
+        name = "Dotnet/Godot: Attach",
+        request = "attach",
+        processId = dap_utils.pick_process,
     }
 }
