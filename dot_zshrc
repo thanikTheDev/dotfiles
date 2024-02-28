@@ -15,18 +15,24 @@ export PATH="$PATH:/home/insidious_flames/.dotnet/tools/"
 
 # Use lf to switch directories and bind it to ctrl-o:
 lfcd () {
-  tmp="$(mktemp)"
-  lf -last-dir-path="$tmp" "$@"
-  if [ -f "$tmp" ]; then
-    dir="$(cat "$tmp")"
-    rm -f "$tmp"
-    [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-  fi
+    cd "$(lf -print-last-dir)"
+    local precmd
+    for precmd in $precmd_functions; do
+        $precmd
+    done
+    zle reset-prompt
 }
-bindkey -s '^o' 'lfcd\n'
+zle -N lfcd
+bindkey '^o' lfcd
 
 # Reverse Search
-bindkey "^R" history-incremental-pattern-search-backward
+fzf-reverse-command-search () {
+  BUFFER="$( ([ -n \"$ZSH_NAME\" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')"
+  zle reset-prompt
+  zle end-of-line
+}
+zle -N fzf-reverse-command-search
+bindkey "^r" fzf-reverse-command-search
 
 # Aliases:
 alias neofetch="neofetch --backend kitty --source ~/Pictures/shell.png --image_size 500"
