@@ -39,14 +39,13 @@ end
 
 dap.adapters.coreclr = {
     type = "executable",
-    -- command = vim.fs.normalize(vim.fn.stdpath("data") .. "/mason/bin/netcoredbg"),
-    command = "/usr/local/netcoredbg",
+    command = vim.fs.normalize(vim.fn.stdpath("data") .. "/mason/bin/netcoredbg"),
     args = {"--interpreter=vscode"}
 }
 
 dap.adapters.godotCLR = {
     type = "executable",
-    command = "/usr/local/netcoredbg",
+    command = vim.fs.normalize(vim.fn.stdpath("data") .. "/mason/bin/netcoredbg"),
     args = { "--interpreter=vscode", "--", "godot"}
 }
 
