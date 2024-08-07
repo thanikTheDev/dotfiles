@@ -1,7 +1,6 @@
 ---
 - name: Setup
   hosts: localhost
-  become: true
   connection: local
   gather_facts: true
 
@@ -68,7 +67,6 @@
           - unrar
           - unzip
           - waybar
-          - webcord
           - wget
           - wlr-randr
           - zathura
@@ -77,6 +75,7 @@
           - zsh
           - zsh-syntax-highlighting
         state: present
+      become: true
 
     - name: Install AUR packages
       kewlfft.aur.aur:
@@ -95,6 +94,7 @@
           - swayosd-git
           - wallust-git
           - waybar-module-pacman-updates-git
+          - webcord
         use: yay
         state: present
 
