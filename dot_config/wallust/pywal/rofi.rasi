@@ -1,0 +1,112 @@
+/**
+ * Wallust Theme (Based on Rofi By Aditya Shakya (adi1090x)
+ *
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
+/*****----- Configuration -----*****/
+configuration {
+    show-icons:                 false;
+}
+
+/*****----- Global Properties -----*****/
+* {
+    font:                        "Hack Nerd Font 10";
+    background:                  {{background}};
+    background-alt:              {{background | lighten(0.2)}};
+    foreground:                  {{foreground}};
+    selected:                    {{color1}};
+    active:                      {{color2}};
+    urgent:                      {{color3}};
+}
+
+/*****----- Main Window -----*****/
+window {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       800px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+    cursor:                      "default";
+    background-color:            @background;
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    enabled:                     true;
+    background-color:            transparent;
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    enabled:                     true;
+    background-color:            transparent;
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    background-color:            @urgent;
+    text-color:                  @background;
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            @active;
+    text-color:                  @background;
+}
+
+/*****----- Message -----*****/
+message {
+    enabled:                     true;
+    background-color:            @background-alt;
+    text-color:                  @foreground;
+}
+
+textbox {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+/*****----- Listview -----*****/
+listview {
+    enabled:                     true;
+    columns:                     6;
+    lines:                       1;
+    cycle:                       true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    background-color:            transparent;
+    cursor:                      "default";
+}
+
+/*****----- Elements -----*****/
+element {
+    enabled:                     true;
+    padding:                     30px 10px;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+element selected.normal {
+    background-color:            @selected;
+    text-color:                  @background;
+}
+

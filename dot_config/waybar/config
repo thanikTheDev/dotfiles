@@ -1,0 +1,268 @@
+{
+    "layer": "top",
+    "position": "top",
+    "margin-top": 10,
+    "margin-left": 10,
+    "margin-right": 10,
+    "reload_style_on_change": true,
+
+    "modules-left": [
+	    "hyprland/submap",
+        "hyprland/workspaces",
+        "hyprland/window",
+	    "tray",
+        "custom/seperator_main_upper",
+	],
+
+    "modules-center": [
+        "custom/seperator_main_lower",
+        "idle_inhibitor",
+	    "clock",
+        "custom/weather",
+        "custom/updater",
+        "custom/seperator_main_upper",
+	],
+
+    "modules-right": [
+        "custom/seperator_main_lower",
+        "group/audio",
+        "group/network-group",
+        "group/motherboard",
+        "battery",
+    ],
+
+    "include": [
+        "~/.config/waybar/workspaces"
+    ],
+
+    "hyprland/submap": {
+		"format": "{}",
+		"tooltip": false
+	},
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 60,
+        "tooltip": false,
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+
+    "clock": {
+        "interval": 1,
+        "format": " {:%I:%M%p}",
+        "format-alt": " {:%I:%M%p  %A, %B %d %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "format": {
+                "months":   "<span><b>{}</b></span>",
+                "days":     "<span><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today":    "<span color='black' background='#ff6699'><b>{}</b></span>"
+            }
+        },              
+        "actions":  {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        },
+    },
+
+    "custom/weather": {
+        "format": "{}",
+        "format-alt": "{alt}: {}",
+        "format-alt-click": "click",
+        "interval": 3600,
+        "return-type": "json",
+        "exec": "~/.config/waybar/scripts/Weather.sh",
+        "exec-if": "ping wttr.in -c1",
+        "tooltip" : true,
+    },
+
+    "custom/updater":{
+        "format": "{icon}{}",
+        "format-icons": {
+            "has-updates": " ",
+            "updated": "",
+        },
+        "return-type": "json",
+        "exec-if": "which waybar-module-pacman-updates",
+        "exec": "waybar-module-pacman-updates --no-zero-output --interval-seconds 5 --network-interval-seconds 300",
+        "on-click": "kitty -T update yay -Syu",
+    },
+
+    "group/audio": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/cava_mviz",
+            "pulseaudio",
+        ],	
+    },
+    
+    "custom/cava_mviz": {
+        "exec": "~/.config/waybar/scripts/WaybarCava.sh",
+        "format": "{}",
+    },
+
+    "pulseaudio": {
+		"scroll-step": 1,
+		"format": "{icon}  {volume}%",
+		"format-bluetooth": "{icon} {volume}%",
+		"format-muted": "",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": ["", ""]
+		},
+		"on-click": "pavucontrol"
+	},
+
+    "group/network-group": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "network-children",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "network",
+            "custom/seperator_sub_upper",
+            "network#speed",
+            "custom/seperator_sub_lower",
+        ]	
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": "{icon} {essid}",
+        "format-ethernet": "󰈀 {ifname}",
+        "format-disconnected": "No connection", 
+        "format-linked": "󰈁 {ifname} (No IP)",
+        "format-alt": "󰴽 {ipaddr}/{cidr}",
+        "max-length": 50,
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+        "tooltip": false
+    },
+
+    "network#speed": {
+        "interval": 1,
+        "format-wifi": " {bandwidthUpBytes}  {bandwidthDownBytes}",
+        "format-ethernet": " {bandwidthUpBytes}  {bandwidthDownBytes}",
+        "format-disconnected": " 0B/s  0B/s", 
+        "format-linked": " 0B/s  0B/s",
+        "tooltip": false
+    },
+
+
+    "group/motherboard": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "motherboard-children",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "cpu",
+            "custom/seperator_sub_upper",
+            "custom/gpu",
+            "memory",
+            "temperature",
+            "disk",
+            "custom/seperator_sub_lower",
+        ]	
+    },
+
+    "cpu": {
+        "format": " {usage}%", 
+        "interval": 1,
+        "states": {
+			"warning": 70,
+			"critical": 90
+		}
+    },
+
+    "custom/gpu": {
+        "exec": "cat /sys/class/hwmon/hwmon2/device/gpu_busy_percent",
+        "format": "󰢮 {}%",
+        "interval": 1,
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "󰋊 {percentage_used}%",
+    },
+
+    "memory": {
+        "interval": 10,
+        "format": "󰾆 {percentage}%",
+        "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
+        "states": {
+			"warning": 70,
+			"critical": 90
+		},
+    },
+
+    "temperature": {
+        "interval": 10,
+        "tooltip": false,
+        "hwmon-path": ["/sys/class/hwmon/hwmon4/temp1_input"],
+        "critical-threshold": 90,
+        "format-critical": "{icon} {temperatureC}°C",
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["󰈸"],
+    },
+    
+    "battery": {
+		"interval": 10,
+		"states": {
+			"warning": 30,
+			"critical": 15
+		},
+		"format-time": "{H}:{M:02}",
+		"format": "{icon} {capacity}% ({time})",
+		"format-charging": " {capacity}% ({time})",
+		"format-full": " {capacity}%",
+		"format-alt": "{icon} {power}W",
+		"format-icons": [
+			" ",
+			" ",
+			" ",
+			" ",
+			" "
+		],
+		"tooltip": false
+	},
+
+    "custom/seperator_main_upper": {
+        "format": "",
+        "tooltip": false
+    },
+
+    "custom/seperator_main_lower": {
+        "format": "",
+        "tooltip": false
+    },
+
+    "custom/seperator_sub_upper": {
+        "format": "",
+        "tooltip": false
+    },
+
+    "custom/seperator_sub_lower": {
+        "format": "",
+        "tooltip": false
+    },
+}

@@ -1,10 +1,15 @@
--- local autocmd = vim.api.nvim_create_autocmd
+local autocmd = vim.api.nvim_create_autocmd
 
 -- Auto resize panes when resizing nvim window
 -- autocmd("VimResized", {
 --   pattern = "*",
 --   command = "tabdo wincmd =",
 -- })
+
+autocmd("VimEnter", {
+    pattern = "*",
+    command = "lua require('base46').load_all_highlights()",
+})
 
 local opt = vim.opt
 

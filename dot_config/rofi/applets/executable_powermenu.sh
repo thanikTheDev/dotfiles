@@ -80,7 +80,7 @@ case ${chosen} in
 		run_cmd --hibernate
         ;;
     $lock)
-    hyprlock
+        hyprlock
         ;;
     $suspend)
 		run_cmd --suspend

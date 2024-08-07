@@ -1,0 +1,92 @@
+#Bashtop Wallust Theme
+#by thanikTheDev
+
+# Colors should be in 6 or 2 character hexadecimal or single spaced rgb decimal: "#RRGGBB", "#BW" or "0-255 0-255 0-255"
+# example for white: "#FFFFFF", "#ff" or "255 255 255".
+
+# All graphs and meters can be gradients
+# For single color graphs leave "mid" and "end" variable empty.
+# Use "start" and "end" variables for two color gradient
+# Use "start", "mid" and "end" for three color gradient
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]=""
+
+# Main text color
+theme[main_fg]="{{foreground}}"
+
+# Title color for boxes
+theme[title]="{{foreground}}"
+
+# Higlight color for keyboard shortcuts
+theme[hi_fg]="{{color1}}"
+
+# Background color of selected items
+theme[selected_bg]="{{color1}}"
+
+# Foreground color of selected items
+theme[selected_fg]="{{background}}"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="{{color9}}"
+
+# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
+theme[graph_text]="{{foreground}}"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="{{color1}}"
+
+# Cpu box outline color
+theme[cpu_box]="{{foreground}}"
+
+# Memory/disks box outline color
+theme[mem_box]="{{foreground}}"
+
+# Net up/down box outline color
+theme[net_box]="{{foreground}}"
+
+# Processes box outline color
+theme[proc_box]="{{foreground}}"
+
+# Box divider line and small boxes line color
+theme[div_line]="{{foreground}}"
+
+# Temperature graph colors
+theme[temp_start]="{{color2}}"
+theme[temp_mid]=""
+theme[temp_end]="{{color10}}"
+
+# CPU graph colors
+theme[cpu_start]="{{color1}}"
+theme[cpu_mid]=""
+theme[cpu_end]="{{color9}}"
+
+# Mem/Disk free meter
+theme[free_start]="{{color3}}"
+theme[free_mid]=""
+theme[free_end]="{{color11}}"
+
+# Mem/Disk cached meter
+theme[cached_start]="{{color4}}"
+theme[cached_mid]=""
+theme[cached_end]="{{color12}}"
+
+# Mem/Disk available meter
+theme[available_start]="{{color5}}"
+theme[available_mid]=""
+theme[available_end]="{{color13}}"
+
+# Mem/Disk used meter
+theme[used_start]="{{color6}}"
+theme[used_mid]=""
+theme[used_end]="{{color14}}"
+
+# Download graph colors
+theme[download_start]="{{color5}}"
+theme[download_mid]=""
+theme[download_end]="{{color13}}"
+
+# Upload graph colors
+theme[upload_start]="{{color6}}"
+theme[upload_mid]=""
+theme[upload_end]="{{color14}}"

@@ -1,0 +1,70 @@
+#!/bin/bash
+
+function wait_till_connected() {
+    while true; do 
+        if ping -c 1 www.reddit.com &> /dev/null; then
+            return;
+        fi
+        echo "Could not connect, Checking connection within 60s" >> /tmp/rewall.log
+        sleep 60
+    done
+}
+
+function print_to_log() {
+    echo "[$(date '+%b %d %r')] ${1}" >> /tmp/rewall.log
+}
+
+print_to_log "Starting Rewall"
+
+while true; do
+    print_to_log "Attempting to change wallpaper"
+
+    while [[ ! -f ~/.cache/rewall ]] || [[ $(find ~/.cache/rewall -mmin +180 -print) ]] || [[ $(jq -r '.error' ~/.cache/rewall) != 'null' ]]; do
+        wait_till_connected
+        curl -s -o ~/.cache/rewall https://www.reddit.com/r/wallpaper/hot.json
+        if [[ $(grep "too many requests" ~/.cache/rewall) -ge 1 ]]; then
+            print_to_log "Failed to get new list of wallpapers, Retry in 1 min 30 seconds"
+            #rm ~/.cache/rewall
+            sleep 90
+        fi
+    done
+    
+    print_to_log "Cache is up to date. Attempting Wallpaper Change"
+
+    if [[ ! -f ~/Pictures/wallpaper || $(find ~/Pictures/wallpaper -mmin +60 -print) ]]; then
+        url=null
+        while [[ "$url" == null || $(echo "$url" | grep -c "gallery") -ge 1 ]]; do
+            INDEX=$((RANDOM % 31))
+            url=$(jq -r --argjson INDEX "$INDEX" '.data.children[$INDEX].data.url' ~/.cache/rewall)
+        done
+
+        print_to_log "Got Wallpaper URL"
+
+        wget -O ~/Pictures/temp "$url" >> /dev/null
+
+        print_to_log "Downloaded Wallpaper"
+
+        rm ~/Pictures/wallpaper
+        ln ~/Pictures/temp ~/Pictures/wallpaper
+        touch ~/Pictures/wallpaper
+        rm ~/Pictures/temp
+
+        print_to_log "Replaced Wallpaper"
+        
+        if [[ $(pgrep -c "hyprpaper") == 0 ]]; then
+            hyprpaper > /dev/null &
+        else
+            hyprctl hyprpaper unload all &>> /tmp/rewall.log
+            hyprctl hyprpaper preload "~/Pictures/wallpaper" &>> /tmp/rewall.log
+            hyprctl hyprpaper wallpaper ", ~/Pictures/wallpaper" &>> /tmp/rewall.log
+        fi
+
+        wallust run ~/Pictures/wallpaper &>> /tmp/rewall.log
+        pywalfox update &>> /tmp/rewall.log
+
+        print_to_log "Updated Wallpaper Settings"
+    fi
+
+    print_to_log "Sleeping"
+    sleep 60
+done

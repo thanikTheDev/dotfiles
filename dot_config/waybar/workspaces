@@ -1,0 +1,29 @@
+{
+    "hyprland/workspaces": {
+        "format": "{icon}{windows}",
+        "format-window-separator": "",
+        "window-rewrite-default": "  ",
+        "window-rewrite": {
+            // Browser
+            "class<firefox> title<.*google.*>": "  ",
+            "class<firefox> title<.*gmail.*>": " 󰊫 ",
+            "class<firefox> title<.*github.*>": "  ",
+            "class<firefox> title<.*youtube.*>": "  ",
+            "class<firefox> title<.*private browsing.*>": "  ",
+            "class<firefox>": "  ",
+            "class<chrome>": "  ",
+
+            // Applications
+            "class<webcord>": " 󰙯 ",
+            "class<steam>": " 󰓓 ",
+            "class<.*zathura.*>": " 󰈔 ",
+
+            // Terminal
+            "class<kitty> title<.*nvim.*>": "  ",
+            "class<kitty> title<.*lf.*>": "  ",
+            "class<kitty> title<.*btop.*>": "  ",
+            "class<kitty>": "  ",
+	    },
+    }
+}
+
