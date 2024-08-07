@@ -150,3 +150,4 @@ map gt cd ~/.local/share/Trash/files
 map gd cd ~/Documents
 map gD cd ~/Downloads
 map gn cd /mnt/mobiusNAS/
+map gp cd ~/Pictures
