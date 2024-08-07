@@ -1,0 +1,100 @@
+---
+- name: Setup
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: Install Pacman packages
+      community.general.pacman:
+        name:
+          - audacity
+          - blender
+          - blueman
+          - bluez-utils
+          - brightnessctl
+          - cifs-utils
+          - cliphist
+          - cups
+          - dosfstools
+          - dotnet-sdk
+          - dunst
+          - ffmpegthumbnailer
+          - freecad
+          - freerdp
+          - fwupd
+          - fzf
+          - gdu
+          - gimp
+          - git
+          - git-lfs
+          - greetd-regreet
+          - grim
+          - guvcview
+          - handbrake
+          - hypridle
+          - hyprland
+          - hyprlock
+          - hyprpaper
+          - imv
+          - inetutils
+          - inkscape
+          - jq
+          - kitty
+          - lf
+          - libreoffice-fresh
+          - lmms
+          - man-db
+          - neofetch
+          - neovim
+          - networkmanager
+          - npm
+          - obs-studio
+          - pnpm
+          - qmk
+          - qpwgraph
+          - qt5-wayland
+          - reflector
+          - remmina
+          - ripgrep
+          - simple-scan
+          - slurp
+          - sshfs
+          - steam
+          - swappy
+          - trash-cli
+          - udiskie
+          - unrar
+          - unzip
+          - waybar
+          - webcord
+          - wget
+          - wlr-randr
+          - zathura
+          - zathura-pdf-mupdf
+          - zip
+          - zsh
+          - zsh-syntax-highlighting
+        state: present
+
+    - name: Install AUR packages
+      kewlfft.aur.aur:
+        name:
+          - aseprite
+          - cava-git
+          - downgrade
+          - dragon-drop
+          - godot-mono
+          - hyprpicker
+          - oh-my-posh-bin
+          - python-pywalfox
+          - rofi-lbonn-wayland-git
+          - simple-mtpfs
+          - stl-thumb
+          - swayosd-git
+          - wallust-git
+          - waybar-module-pacman-updates-git
+        use: yay
+        state: present
+
