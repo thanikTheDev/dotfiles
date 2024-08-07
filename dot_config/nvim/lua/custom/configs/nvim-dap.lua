@@ -49,12 +49,6 @@ dap.adapters.godotCLR = {
     args = { "--interpreter=vscode", "--", "godot"}
 }
 
--- dap.adapters.unity = {
---     type = "executable",
---     command = "mono",
---     args = { "/home/insidious_flames/vscode-unity-debug/bin/UnityDebug.exe" }
--- }
-
 dap.configurations.cs = {
     {
         type = "coreclr",
@@ -105,5 +99,23 @@ dap.configurations.cs = {
         name = "Dotnet/Godot: Attach",
         request = "attach",
         processId = dap_utils.pick_process,
+    }
+}
+
+dap.adapters.debugpy = {
+    type = "executable",
+    command = vim.fs.normalize(vim.fn.stdpath("data") .. "/mason/bin/debugpy-adapter"),
+}
+
+dap.configurations.python = {
+    {
+        type = "debugpy",
+        name = "Launch File",
+        request = "launch",
+        module = "pywal",
+        args = function()
+            local args_string = vim.fn.input('Arguments: ')
+            return vim.split(args_string, " +")
+        end
     }
 }

@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 local utils = require "core.utils"
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "astro", "rust_analyzer", "bashls" }
+local servers = { "html", "cssls", "tsserver", "astro", "rust_analyzer", "bashls", "pyright" }
 
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
