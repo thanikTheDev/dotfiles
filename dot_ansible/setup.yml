@@ -5,95 +5,161 @@
   gather_facts: true
 
   tasks:
-    - name: Install Pacman packages
+    - name: Commandline Tools
       community.general.pacman:
         name:
-          - audacity
-          - blender
-          - blueman
           - bluez-utils
-          - brightnessctl
           - cifs-utils
-          - cliphist
           - cups
           - dosfstools
-          - dotnet-sdk
-          - dunst
-          - ffmpegthumbnailer
-          - freecad
-          - freerdp
           - fwupd
           - fzf
           - gdu
-          - gimp
-          - git
-          - git-lfs
-          - greetd-regreet
-          - grim
-          - guvcview
-          - handbrake
-          - hypridle
-          - hyprland
-          - hyprlock
-          - hyprpaper
-          - imv
           - inetutils
-          - inkscape
           - jq
-          - kitty
-          - lf
-          - libreoffice-fresh
-          - lmms
           - man-db
-          - neofetch
-          - neovim
           - networkmanager
-          - npm
-          - obs-studio
-          - pnpm
           - qmk
-          - qpwgraph
-          - qt5-wayland
           - reflector
-          - remmina
           - ripgrep
-          - simple-scan
-          - slurp
           - sshfs
-          - steam
-          - swappy
-          - trash-cli
           - udiskie
           - unrar
           - unzip
-          - waybar
           - wget
-          - wlr-randr
-          - zathura
-          - zathura-pdf-mupdf
           - zip
+        state: present
+      become: true
+
+    - name: Commandline Tools AUR
+      kewlfft.aur.aur:
+        name:
+          - downgrade
+          - simple-mtpfs
+        use: yay
+        state: present
+
+    - name: Commandline Developer Tools
+      community.general.pacman:
+        name:
+          - dotnet-sdk
+          - git
+          - git-lfs
+          - neovim
+          - npm
+          - pnpm
+        state: present
+      become: true
+
+    - name: Terminal
+      community.general.pacman:
+        name:
+          - kitty
+          - neofetch
           - zsh
           - zsh-syntax-highlighting
         state: present
       become: true
 
-    - name: Install AUR packages
+    - name: Terminal AUR
+      kewlfft.aur.aur:
+        name:
+          - oh-my-posh-bin
+        use: yay
+        state: present
+
+    - name: File Explorer
+      community.general.pacman:
+        name:
+          - ffmpegthumbnailer
+          - lf
+          - trash-cli
+        state: present
+      become: true
+
+    - name: File Explorer AUR
+      kewlfft.aur.aur:
+        name:
+          - stl-thumb
+        use: yay
+        state: present
+
+    - name: Hyprland
+      community.general.pacman:
+        name:
+          - blueman
+          - brightnessctl
+          - cliphist
+          - dunst
+          - greetd-regreet
+          - grim
+          - hypridle
+          - hyprland
+          - hyprlock
+          - hyprpaper
+          - imv
+          - qpwgraph
+          - qt5-wayland
+          - slurp
+          - swappy
+          - waybar
+          - wlr-randr
+        state: present
+      become: true
+
+    - name: Hyprland AUR
+      kewlfft.aur.aur:
+        name:
+          - cava-git
+          - dragon-drop
+          - hyprpicker
+          - rofi-lbonn-wayland-git
+          - swayosd-git
+          - python-pywalfox
+          - wallust-git
+          - waybar-module-pacman-updates-git
+        use: yay
+        state: present
+    
+    - name: Game Development
+      community.general.pacman:
+        name:
+          - audacity
+          - blender
+          - gimp
+          - inkscape
+          - lmms
+        state: present
+      become: true
+
+    - name: Game Development AUR
       kewlfft.aur.aur:
         name:
           - aseprite
-          - cava-git
-          - downgrade
-          - dragon-drop
           - godot-mono
-          - hyprpicker
-          - oh-my-posh-bin
-          - python-pywalfox
-          - rofi-lbonn-wayland-git
-          - simple-mtpfs
-          - stl-thumb
-          - swayosd-git
-          - wallust-git
-          - waybar-module-pacman-updates-git
+        use: yay
+        state: present
+
+    - name: Applications
+      community.general.pacman:
+        name:
+          - freecad
+          - freerdp
+          - guvcview
+          - handbrake
+          - libreoffice-fresh
+          - obs-studio
+          - remmina
+          - simple-scan
+          - steam
+          - zathura
+          - zathura-pdf-mupdf
+        state: present
+      become: true
+
+    - name: Applications AUR
+      kewlfft.aur.aur:
+        name:
           - webcord
         use: yay
         state: present
