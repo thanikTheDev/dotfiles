@@ -71,7 +71,6 @@ alpha = 90
 # newly created file to `~/.config/zathura/zathurarc` and it uses the `new_engine` flag for double brackets.
 
 [templates]
-base46 = { template = "base46", target = "~/.config/nvim/lua/custom/themes/wallust.lua" }
 btop = { template = "btop", target = "~/.config/btop/themes/wallust.theme" }
 kitty = { template = "kitty", target = "~/.config/kitty/kitty.conf" }
 pywal = { template = "pywal/", target = "~/.cache/wal/" }
