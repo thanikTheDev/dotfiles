@@ -73,6 +73,7 @@ alpha = 90
 [templates]
 btop = { template = "btop", target = "~/.config/btop/themes/wallust.theme" }
 kitty = { template = "kitty", target = "~/.config/kitty/kitty.conf" }
+spicetify = { template = "spicetify", target = "~/.config/spicetify/Themes/Sleek/color.ini" }
 pywal = { template = "pywal/", target = "~/.cache/wal/" }
 zathura = { template = "zathura", target = "~/.config/zathura/zathurarc" }
 

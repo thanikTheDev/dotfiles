@@ -15,7 +15,7 @@ set ifs "\n"
 # Custom Commands
 cmd open &{{
   case $(file --mime-type -Lb $f) in
-    text/*|application/json|application/x-ndjson|application/javascript) lf -remote "send $id \$$EDITOR \$f";;
+    text/*|application/json|application/x-ndjson|application/javascript|inode/x-empty) lf -remote "send $id \$$EDITOR \$f";;
     *) $OPENER $f > /dev/null 2> /dev/null
   esac
 }}
