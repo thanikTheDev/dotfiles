@@ -3,12 +3,14 @@ local M = {
     dependencies = {
         "williamboman/mason.nvim",
         "hrsh7th/cmp-nvim-lsp",
+        "Hoffs/omnisharp-extended-lsp.nvim",
     },
     event = "User FilePost",
 }
 
 function M.config()
     local lspconfig = require "lspconfig"
+    local omnisharp_extended = require "omnisharp_extended"
 
     local signs = {
         { name = "DiagnosticSignError", text = "" },
@@ -59,9 +61,20 @@ function M.config()
             }
         end,
         capabilities = capabilities,
-        organize_imports_on_format = true,
-        enable_import_completion = true,
-        sdk_include_prereleases = true,
+        handlers = {
+            ['textDocument/definition'] = omnisharp_extended.handler,
+            ['textDocument/typeDefinition'] = omnisharp_extended.handler,
+            ['textDocument/references'] = omnisharp_extended.handler,
+            ['textDocument/implementation'] = omnisharp_extended.handler,
+        },
+        settings = {
+            OrganizeImports = true,
+        },
+        RosylnExtensionsOptions = {
+            EnableAnalyzersSupport = true,
+            EnableImportCompletion = true,
+            EnableDecompilationSupport = true,
+        },
         cmd = { "omnisharp" }
     }
 end

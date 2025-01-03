@@ -1,27 +1,22 @@
-local function telescope_selection(prompt_title, finder_options)
-    local pickers = require "telescope.pickers"
-    local finders = require "telescope.finders"
-    local conf = require("telescope.config").values
-    local actions = require "telescope.actions"
-    local action_state = require "telescope.actions.state"
-
-    return coroutine.create(function(coro)
-        local opts = {}
-        pickers.new(opts, {
-            prompt_title = prompt_title,
-            finder = finders.new_oneshot_job(finder_options, {}),
-            sorter = conf.generic_sorter(opts),
-            attach_mappings = function (buffer_number)
-                actions.select_default:replace(function ()
-                    actions.close(buffer_number)
-                    coroutine.resume(coro, action_state.get_selected_entry()[1])
-                end)
-                return true
-            end
-        }):find()
-    end)
+local function select_program(prompt_title, program_search_command)
+    return function()
+        return coroutine.create(function(coro)
+            vim.ui.select(
+                vim.split(vim.fn.system(program_search_command), "\n"),
+                { prompt = prompt_title },
+                function(selected) coroutine.resume(coro, selected) end
+            )
+        end)
+    end
 end
 
+local function set_program_arguments()
+    return function()
+        return coroutine.create(function(coro)
+            vim.ui.input({ prompt = "Program Arguments", kind = "input_center" }, function(params) coroutine.resume(coro, vim.split(params, " ")) end)
+        end)
+    end
+end
 
 local M = {
     "mfussenegger/nvim-dap",
@@ -33,7 +28,6 @@ local M = {
             main = "dapui",
         },
         "theHamsta/nvim-dap-virtual-text",
-        "nvim-telescope/telescope.nvim",
     },
 }
 
@@ -48,7 +42,6 @@ M.keys = {
     { "<leader>de", function() require("dap") require("dapui").eval() end, desc = "Debug Evaluation" },
     { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate Debug Session" },
 }
-
 
 function M.config()
     local dap = require "dap"
@@ -78,13 +71,13 @@ function M.config()
     dap.adapters.coreclr = {
         type = "executable",
         command = vim.fs.normalize(vim.fn.stdpath("data") .. "/mason/bin/netcoredbg"),
-        args = {"--interpreter=vscode"}
+        args = { "--interpreter=vscode" }
     }
 
     dap.adapters.godotCLR = {
         type = "executable",
         command = vim.fs.normalize(vim.fn.stdpath("data") .. "/mason/bin/netcoredbg"),
-        args = { "--interpreter=vscode", "--", "godot-mono"}
+        args = { "--interpreter=vscode", "--", "godot-mono" }
     }
 
     dap.configurations.cs = {
@@ -92,13 +85,14 @@ function M.config()
             type = "coreclr",
             name = "DOTNET: Launch",
             request = "launch",
-            program = telescope_selection("Select DLL", {"fd", "--no-ignore", "-e", "dll"}),
+            program = select_program("Select DLL", "fd -Ie dll"),
+            args = set_program_arguments()
         },
         {
             type = "godotCLR",
             name = "Godot: Launch Scene",
             request = "launch",
-            program = telescope_selection("Select Scene", {"fd", "--no-ignore", "-e", "tscn"}),
+            program = select_program("Select Scene", "fd -Ie tscn"),
         },
         {
             type = "coreclr",
@@ -119,10 +113,7 @@ function M.config()
             name = "Launch File",
             request = "launch",
             module = "pywal",
-            args = function()
-                local args_string = vim.fn.input('Arguments: ')
-                return vim.split(args_string, " +")
-            end
+            args = set_program_arguments()
         }
     }
 end

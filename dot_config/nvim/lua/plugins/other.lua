@@ -74,7 +74,7 @@ return {
         },
     },
     {
-        'numToStr/Comment.nvim',
+        "numToStr/Comment.nvim",
         opts = {},
         keys = {
             { "<leader>/", function() require("Comment.api").toggle.linewise.current() end, desc = "Toggle Comment" },
@@ -95,4 +95,20 @@ return {
         "uZer/pywal16.nvim",
         opts = {},
     },
+    {
+        "stevearc/dressing.nvim",
+        opts = {
+            input = {
+                get_config = function(opts)
+                    if opts.kind == "input_center" then
+                        return {
+                            title_pos = "center",
+                            relative = "editor",
+                        }
+                    end
+                end
+            }
+        },
+        event = "UIEnter",
+    }
 }
