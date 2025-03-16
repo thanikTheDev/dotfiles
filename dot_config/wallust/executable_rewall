@@ -60,7 +60,6 @@ while true; do
         fi
 
         wallust run ~/Pictures/wallpaper &>> /tmp/rewall.log
-        pywalfox update &>> /tmp/rewall.log
 
         print_to_log "Updated Wallpaper Settings"
     fi
