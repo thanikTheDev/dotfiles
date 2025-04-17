@@ -21,7 +21,7 @@ while true; do
 
     while [[ ! -f ~/.cache/rewall ]] || [[ $(find ~/.cache/rewall -mmin +180 -print) ]] || [[ $(jq -r '.error' ~/.cache/rewall) != 'null' ]]; do
         wait_till_connected
-        curl -s -o ~/.cache/rewall https://www.reddit.com/r/wallpaper/hot.json
+        wget -q -O ~/.cache/rewall https://www.reddit.com/r/wallpaper/hot.json
         if [[ $(grep "too many requests" ~/.cache/rewall) -ge 1 ]]; then
             print_to_log "Failed to get new list of wallpapers, Retry in 1 min 30 seconds"
             #rm ~/.cache/rewall
@@ -40,7 +40,7 @@ while true; do
 
         print_to_log "Got Wallpaper URL"
 
-        wget -O ~/Pictures/temp "$url" >> /dev/null
+        wget -q -O ~/Pictures/temp "$url" >> /dev/null
 
         print_to_log "Downloaded Wallpaper"
 
