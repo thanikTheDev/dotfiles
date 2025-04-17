@@ -143,6 +143,7 @@ map cm chmod
 map f fzf_jump
 map cc clear
 map <f-5> reload
+map o &kitty -d $PWD
 
 # Goto Mapping
 map gu cd /run/media/insidious_flames
