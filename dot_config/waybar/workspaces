@@ -5,13 +5,18 @@
         "window-rewrite-default": "  ",
         "window-rewrite": {
             // Browser
+            "class<brave-browser>": "  ",
+            "class<brave-browser> title<.*google.*>": "  ",
+            "class<brave-browser> title<.*gmail.*>": " 󰊫 ",
+            "class<brave-browser> title<.*github.*>": "  ",
+            "class<brave-browser> title<.*youtube.*>": "  ",
+            "class<chrome>": "  ",
+            "class<firefox>": "  ",
             "class<firefox> title<.*google.*>": "  ",
             "class<firefox> title<.*gmail.*>": " 󰊫 ",
             "class<firefox> title<.*github.*>": "  ",
             "class<firefox> title<.*youtube.*>": "  ",
             "class<firefox> title<.*private browsing.*>": "  ",
-            "class<firefox>": "  ",
-            "class<chrome>": "  ",
 
             // Applications
             "class<webcord>": " 󰙯 ",
@@ -19,7 +24,7 @@
             "class<.*zathura.*>": " 󰈔 ",
 
             // Terminal
-            "class<kitty> title<.*nvim.*>": "  ",
+            "class<kitty> title<.*nvim.*>": "  ",
             "class<kitty> title<.*lf.*>": "  ",
             "class<kitty> title<.*btop.*>": "  ",
             "class<kitty>": "  ",
