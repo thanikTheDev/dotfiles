@@ -47,7 +47,7 @@ M.opts = {
         "netcoredbg",
 
         -- shell
-        "bash-lanaguage-server",
+        "bash-language-server",
     }
 }
 
