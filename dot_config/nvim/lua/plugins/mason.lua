@@ -45,6 +45,9 @@ M.opts = {
         -- c#
         "omnisharp",
         "netcoredbg",
+
+        -- shell
+        "bash-lanaguage-server",
     }
 }
 

@@ -12,7 +12,7 @@ vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 
 -- Keymap
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open NetRW" })
+vim.keymap.set("n", "<leader>fs", vim.cmd.Ex, { desc = "Open NetRW" })
 vim.keymap.set("n", "<leader>sh", vim.cmd.split, { desc = "Split Horizontal" })
 vim.keymap.set("n", "<leader>sv", vim.cmd.vsplit, { desc = "Split Vertical" })
 -- Switch Between Windows
