@@ -9,7 +9,6 @@ local M = {
 }
 
 function M.config()
-    local lspconfig = require "lspconfig"
     local omnisharp_extended = require "omnisharp_extended"
 
     local signs = {
@@ -35,10 +34,10 @@ function M.config()
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup {}
+        vim.lsp.config(lsp, {})
     end
 
-    lspconfig.lua_ls.setup {
+    vim.lsp.config('lua_ls', {
         capabilities = capabilities,
         settings = {
             Lua = {
@@ -47,9 +46,9 @@ function M.config()
                 },
             },
         },
-    }
+    })
 
-    lspconfig.omnisharp.setup {
+    vim.lsp.config('omnisharp', {
         on_attach = function(client, _)
             client.server_capabilities.semanticTokensProvider.legend = {
                 tokenModifiers = { "static" },
@@ -76,7 +75,7 @@ function M.config()
             EnableDecompilationSupport = true,
         },
         cmd = { "omnisharp" }
-    }
+    })
 end
 
 return M
