@@ -1,0 +1,22 @@
+local M = {}
+
+M.foreground = "rgba({{foreground | strip}}FF)"
+M.background = "rgba({{background | strip}}FF)"
+M.color0 = "rgba({{color0 | strip}}FF)"
+M.color1 = "rgba({{color1 | strip}}FF)"
+M.color2 = "rgba({{color2 | strip}}FF)"
+M.color3 = "rgba({{color3 | strip}}FF)"
+M.color4 = "rgba({{color4 | strip}}FF)"
+M.color5 = "rgba({{color5 | strip}}FF)"
+M.color6 = "rgba({{color6 | strip}}FF)"
+M.color7 = "rgba({{color7 | strip}}FF)"
+M.color8 = "rgba({{color8 | strip}}FF)"
+M.color9 = "rgba({{color9 | strip}}FF)"
+M.color10 = "rgba({{color10 | strip}}FF)"
+M.color11 = "rgba({{color11 | strip}}FF)"
+M.color12 = "rgba({{color12 | strip}}FF)"
+M.color13 = "rgba({{color13 | strip}}FF)"
+M.color14 = "rgba({{color14 | strip}}FF)"
+M.color15 = "rgba({{color15 | strip}}FF)"
+
+return M
