@@ -69,6 +69,7 @@ cmd unarchive %{{
     *.tar.xz|*.txz) tar xJvf $f --one-top-level;;
     *.rar) unrar x $f "${target}/";;
     *.7z) 7z x $f;;
+    *.xz) unxz $f;;
     *) echo "Unsupported format";;
   esac
 }}

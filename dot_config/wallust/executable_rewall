@@ -33,7 +33,7 @@ while true; do
 
     if [[ ! -f ~/Pictures/wallpaper || $(find ~/Pictures/wallpaper -mmin +60 -print) ]]; then
         url=null
-        while [[ "$url" == null || $(echo "$url" | grep -c "gallery") -ge 1 ]]; do
+        while [[ "$url" == null || ("$url" != *.png && "$url" != *.jpeg && "$url" != *.jpg && "$url" != *.webp && "$url" != *.tiff && "$url" != *.tif) ]]; do
             INDEX=$((RANDOM % 31))
             url=$(jq -r --argjson INDEX "$INDEX" '.data.children[$INDEX].data.url' ~/.cache/rewall)
         done
