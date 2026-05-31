@@ -38,7 +38,7 @@ while true; do
             url=$(jq -r --argjson INDEX "$INDEX" '.data.children[$INDEX].data.url' ~/.cache/rewall)
         done
 
-        print_to_log "Got Wallpaper URL"
+        print_to_log "Got Wallpaper URL: $url"
 
         wget -q -O ~/Pictures/temp "$url" >> /dev/null
 
@@ -54,8 +54,6 @@ while true; do
         if [[ $(pgrep -c "hyprpaper") == 0 ]]; then
             hyprpaper > /dev/null &
         else
-            hyprctl hyprpaper unload all &>> /tmp/rewall.log
-            hyprctl hyprpaper preload "~/Pictures/wallpaper" &>> /tmp/rewall.log
             hyprctl hyprpaper wallpaper ", ~/Pictures/wallpaper" &>> /tmp/rewall.log
         fi
 
